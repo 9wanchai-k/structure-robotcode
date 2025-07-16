@@ -1,0 +1,39 @@
+# Basic settings
+output-dir = "output"
+log-level = "INFO"
+languages = ["EN", "TH"]
+
+# Global variables
+[variables]
+BROWSER = "Chrome"
+WEB_URL = "https://www.saucedemo.com/"
+DEFAULT_TIMEOUT = "10s"
+SHORT_TIMEOUT = "5s"
+LONG_TIMEOUT = "30s"
+
+# Development environment profile
+[profiles.dev]
+output-dir = "results/dev"
+variables = { ENVIRONMENT = "development", WEB_URL = "https://www.saucedemo.com/" }
+
+# Production testing profile
+[profiles.prod]
+output-dir = "results/prod"
+variables = { ENVIRONMENT = "production", WEB_URL = "https://www.saucedemo.com/" }
+
+# Base profile with common settings
+[profiles.base]
+log-level = "INFO"
+variables = { TIMEOUT = "20s" }
+
+# Testing profile also builds on base settings
+[profiles.test]
+inherits = ["base"]
+variables = { ENVIRONMENT = "testing", API_URL = "http://test-api.example.com" }
+
+[tool.robotcode]
+command = "pabot"
+args = ["--processes", "4", "--outputdir", "results"]
+
+
+paths = ["testsscript", "resources", "libraries"]
